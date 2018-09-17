@@ -1,0 +1,21 @@
+//Breadth-First-Search in BST
+static void levelOrder(Node root){
+  Queue q=new LinkedList();
+  //Write your code here
+  if(root==null){
+    return;
+  }
+  else{
+    q.add(root);
+  }
+  while(!q.isEmpty()){
+    Node n=(Node)q.remove();
+    System.out.print(n.data+" ");
+    if(n.left !=null){
+      q.add(n.left);
+    }
+    if(n.right !=null){
+      q.add(n.right);
+    }
+  }
+}
