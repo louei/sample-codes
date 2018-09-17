@@ -1,0 +1,80 @@
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+public class Program
+{
+	static int solution(string a, string b)
+	{
+		int total = 0;
+		char[] aChar = a.ToCharArray();
+		char[] bChar = b.ToCharArray();
+		Array.Sort(aChar);
+		Array.Sort(bChar);
+		string aStr = new string(aChar);
+		string bStr = new string(bChar);
+		var s = aStr.Intersect(bStr);
+		string result = String.Join("", s);
+		int i = 0, j = 0, x = 0, y = 0;
+		string t = aStr, r =bStr;
+		foreach (char c in result)
+		{
+			t = t.Replace(c,' ');
+			r = r.Replace(c,' ');
+			i = aStr.IndexOf(c);
+			j = aStr.LastIndexOf(c);
+			if (i < j)
+			{
+				x = j - i + 1;
+			}
+			else
+			{
+				x = 1;
+			}
+			i = bStr.IndexOf(c);
+			j = bStr.LastIndexOf(c);
+			if (i < j)
+			{
+				y = j - i + 1;
+			}
+			else
+			{
+				y = 1;
+			}
+			total += Math.Abs(x-y);
+		}
+		t.Trim();
+		t.Trim(' ');
+		r.Trim();
+		r.Trim(' ');
+		if (!String.IsNullOrEmpty(t) && !String.IsNullOrWhiteSpace(t)) {
+			total += t.Length;
+		}
+		if (!String.IsNullOrEmpty(r) && !String.IsNullOrWhiteSpace(r))
+		{
+			total += r.Length;
+		}
+		Console.WriteLine(total);
+		return total;
+	}
+
+	static void Main(string[] args)
+	{
+
+		string a = Console.ReadLine();
+
+		string b = Console.ReadLine();
+
+		int res = makeAnagram(a, b);
+
+	}
+}
