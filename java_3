@@ -1,0 +1,53 @@
+/*Given an inclusive interval of integers from n to m, can you help Lia find 
+the number of pairs of twins there are in the interval (i.e.,[n,m])? Note that 
+pairs(i,j)and(j,i) are considered to be the same pair.*/
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        int n=in.nextInt();
+        int m=in.nextInt();
+        Solution s=new Solution(n,m);
+    }
+    Solution(int n,int m){
+        PriorityQueue<Integer> pq=new PriorityQueue<Integer>();
+        for(int i=n;i<=m;i++){
+            if(primeNum(i)){
+                pq.add(i);
+            }
+        }
+        twin(pq);
+    }
+    boolean primeNum(int n){
+        int i=2;
+        while(i<n){
+            if(n%i==0){
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+    void twin(PriorityQueue<Integer> pq){
+        int j=1;
+        Integer[] a=pq.toArray(new Integer[0]);
+        Set<Integer> s=new HashSet<Integer>();
+        Arrays.sort(a);
+        for(int i=0;i<a.length;i++){
+            while(i+j<a.length && Math.abs(a[i]-a[i+j])<=2){
+                if(Math.abs(a[i]-a[i+j])==2){
+                    s.add(a[i]);
+                    j=a.length;
+                //    s.add(a[i+j]);
+                }
+                j++;
+            }
+            j=1;
+        }
+        System.out.println(s.size());
+    }
+}
