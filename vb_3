@@ -1,0 +1,74 @@
+Sub staticArrayPopulateAndLoop()
+  Dim i As Integer
+  Dim names(2) As String
+  names(0) = "Bob"
+  names(1) = "Marry"
+  names(2) = "George"
+  'Loop through names
+  For i = 0 To UBound(names, 1)
+    Cells(i + 1, 1).Value = names(i)
+  Next i
+End Sub
+Sub populate1DArrayFromWorksheet()
+  Dim months(11) As String
+  Dim i As Integer
+  Dim xrow As Long
+  i = 0 'variable for the index of the array
+  xrow = 2 'variable for the row # on worksheet
+  Do Until Cells(xrow, 1).Value = ""
+    months(i) = Cells(xrow, 1).Value
+    xrow = xrow + 1
+    i = i + 1
+  Loop
+End Sub
+Sub testFunctions()
+  Dim x As Integer
+  x = myFirstFun()
+  MsgBox (x)
+End Sub
+'function returns a value but sub peocedure not
+Function myFirstFun() As Integer
+    myFirstFun = 1
+End Function
+Function convertToCelsius(TempFarenheit As Double) As Double
+  convertToCelsius = (TempFarenheit - 32) * 5 / 9
+End Function
+Public q As Integer
+Dim z As Integer
+Sub varModule()
+    Dim x As Integer
+    x = x + 100
+    Static y As Integer
+    y = y + 100
+    z = z + 100
+    q = q + 100
+    MsgBox ("x in second module is " & x) 'x dies after end sub
+    MsgBox ("y in second module is " & y) 'y lives after end sub
+    MsgBox ("z in second module is " & z) 'z lives after end sub and seen in other sub
+    MsgBox ("q in second module is " & q) 'q lives after end sub and seen both in other subs and modules
+    
+    Call mySecondModule
+End Sub
+Sub mySecondMacro()
+    MsgBox ("x in second module is " & x) 'no value
+    MsgBox ("y in second module is " & y) 'no value
+    MsgBox ("z in second module is " & z) 'has a value
+    MsgBox ("q in second module is " & q) 'has a value
+'runs myFirstMacro
+    Call myFirstMacro("Tira")
+    Call myThirdMacro
+End Sub
+Sub myFirstMacro(str As String)
+    MsgBox ("Hello " & str)
+End Sub
+Sub myThirdMacro()
+    MsgBox ("Goodbye")
+End Sub
+Sub globalVar()
+    MsgBox ("x in second module is " & x) 'no value
+    MsgBox ("y in second module is " & y) 'no value
+    MsgBox ("z in second module is " & z) 'no value
+    MsgBox ("q in second module is " & q) 'has a value
+End Sub
+
+
