@@ -1,0 +1,98 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="tutorial.WebForm1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+	<script type="text/javascript">
+		function openWindow() {
+			var Name = document.getElementById("txtName").value;
+			var Email = document.getElementById("txtEmail").value;
+			window.open("WebForm2.aspx?userName=" + Name + "&userEmail=" + Email, "_blank", "location = no", true);
+		}
+	</script>
+	<style type="text/css">
+		#btnOpenWindow2 {
+			width: 364px;
+		}
+	</style>
+</head>
+<body>
+    <form id="form1" runat="server">
+		<div style="font-family: Arial">
+			<table>
+				<tr>
+					<td colspan="2">
+						<h1>This is WebForm1</h1>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<b>Name</b>
+					</td>
+					<td>:<asp:TextBox ID="txtName" runat="server">
+					</asp:TextBox>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<b>Email</b>
+					</td>
+					<td>:<asp:TextBox ID="txtEmail" runat="server">
+					</asp:TextBox>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<asp:Button ID="btnCrossPagePostback" runat="server"
+							Text="Cross Page Postback - WebForm2"
+							Width="250px" PostBackUrl="~/WebForm2.aspx" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<asp:Button ID="btnTransfer" runat="server" OnClick="Button1_Click"
+							Text="Server.Transfer - WebForm2" Width="250px" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						 <!--The following code is used when we use built-in functions-->
+						<input id="btnOpenWindow" type="button" value="Go to WebForm2 by Window.Open" 
+							onclick="window.open('WebForm2.aspx')"/>
+					</td>
+				</tr>
+				<tr>
+					<td>	
+						<!--The following code is used when we use javascript functions with html-->
+						<input id="btnOpenWindow2" type="button" value="Go to WebForm2 by Window.Open JavaScript" 
+							onclick="openWindow()"/>
+					</td>
+				</tr>
+				<tr>
+					<td>				
+						<!--The following code is used when we use javascript functions with ASP-->
+						<asp:Button ID="btnOpenWindow3" runat="server" Text="Go to WebForm2 by Window.Open ASP Javascript" 
+							OnClientClick="openWindow()" />
+					</td>
+				</tr>
+				
+				<tr>
+					<td>				
+						<!--The following code is used when we use javascript functions with ASP-->
+						<asp:Button ID="btnOpenWindow4" runat="server" Text="Go to WebForm2 by Window.Open ASP" 
+							OnClick="btnOpenWindow4_Click" Width="323px" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<asp:Button ID="btnContextHandler" runat="server" Text="Go to WebForm2 by Context.Handler" OnClick="btnContextHandler_Click" />
+					</td>
+				</tr>
+
+			</table>
+		</div>
+    </form>
+</body>
+</html>
