@@ -1,0 +1,47 @@
+<?php
+
+// Complete the dynamicArray function below.
+function dynamicArray($n, $queries) {
+    $result=array();
+    $lastAnswer = 0;
+    $len=count($queries);
+    for($j=0;$j<$n;$j++){
+        $arr[$j]=array();
+    }
+    for($i=0;$i<$len;$i++){
+        switch($queries[$i][0]){
+            case 1:
+                $seq=($queries[$i][1] ^ $lastAnswer) % $n;
+                array_push($arr[$seq],($queries[$i][2]));
+                break;
+            case 2:
+                $seq=($queries[$i][1] ^ $lastAnswer) % $n;
+                $lastAnswer=$arr[$seq][$queries[$i][2] % count($arr[$seq])];
+                array_push($result,$lastAnswer);
+                break;
+        }
+    }
+    return $result;
+}
+
+$fptr = fopen(getenv("OUTPUT_PATH"), "w");
+
+$nq = explode(' ', rtrim(fgets(STDIN)));
+
+$n = intval($nq[0]);
+
+$q = intval($nq[1]);
+
+$queries = array();
+
+for ($i = 0; $i < $q; $i++) {
+    $queries_temp = rtrim(fgets(STDIN));
+
+    $queries[] = array_map('intval', preg_split('/ /', $queries_temp, -1, PREG_SPLIT_NO_EMPTY));
+}
+
+$result = dynamicArray($n, $queries);
+
+fwrite($fptr, implode("\n", $result) . "\n");
+
+fclose($fptr);
