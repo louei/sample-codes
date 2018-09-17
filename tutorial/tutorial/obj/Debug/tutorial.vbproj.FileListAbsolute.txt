@@ -1,0 +1,14 @@
+D:\CS_Courses\VB\tutorial\tutorial\bin\Debug\tutorial.exe.config
+D:\CS_Courses\VB\tutorial\tutorial\bin\Debug\tutorial.exe
+D:\CS_Courses\VB\tutorial\tutorial\bin\Debug\tutorial.pdb
+D:\CS_Courses\VB\tutorial\tutorial\bin\Debug\tutorial.xml
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.vbprojAssemblyReference.cache
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.Form1.resources
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.Resources.resources
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.vbproj.GenerateResource.cache
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.vbproj.CoreCompileInputs.cache
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.exe
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.xml
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.pdb
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.Form2.resources
+D:\CS_Courses\VB\tutorial\tutorial\obj\Debug\tutorial.SplashScreen1.resources
