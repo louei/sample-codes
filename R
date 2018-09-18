@@ -1,0 +1,79 @@
+> l <- 1/13000
+> X.bar <- rep(0,10^5)
+> for(i in 1:10^5)
++ {
++ X <- rexp(201,l)
++ X.bar[i] <- mean(X)
++ }
+> mean(abs(X.bar - 1/l) <= 1000)
+[1] 0.7247
+> m <- 13000
+> s<- 13000/sqrt(201)
+> pnorm(14000,m,s) - pnorm(12000,m,s)
+[1] 0.7245391
+> m <- 12000
+> s <- 12000/sqrt(201)
+> pnorm(13000,m,s) - pnorm(11000,m,s)
+[1] 0.7625775
+> m <- 3
+> s <- sqrt(2)
+> X.bar <- rep(0,10^5)
+> d.range <- rep(0,10^5)
+> for(i in 1:10^5)
++ {
++ X <- rnorm(100,m,s)
++ X.bar[i] <- mean(X)
++ d.range[i] <- (max(X)+min(X))/2
++ }
+> var(X.bar)
+[1] 0.02020161
+> var(d.range)
+[1] 0.1850595
+> a <- 0.5
+> b <- 5.5
+> X.bar <- rep(0,10^5)
+> mid.range <- rep(0,10^5)
+> for(i in 1:10^5)
++ {
++ X <- runif(100,a,b)
++ X.bar[i] <- mean(X)
++ mid.range[i] <- (max(X)+min(X))/2
++ }
+> var(X.bar)
+[1] 0.02074304
+> var(mid.range)
+[1] 0.001209732
+> mu <- 5
+> std <- sqrt(3)
+> X.var <- rep(0,10^5)
+> for(i in 1:10^5)
++ {
++ X <- rnorm(20,mu,std)
++ X.var[i] <- var(X)
++ }
+> lam <- 1/13000
+> n <- 201
+> X.bar <- rep(0,10^5)
+> S <- rep(0,10^5)
+> for(i in 1:10^5)
++ {
++ X <- rexp(n,lam)
++ X.bar[i] <- mean(X)
++ S[i] <- sd(X)
++ }
+> LCL <- X.bar - 1.96*S/sqrt(n)
+> UCL <- X.bar + 1.96*S/sqrt(n)
+> mean((13000 >= LCL) & (13000 <= UCL))
+[1] 0.94518
+> p <- 0.12
+> n <- 205
+> P.hat <- rep(0,10^5)
+> for(i in 1:10^5)
++ {
++ X <- rbinom(n,1,p)
++ P.hat[i] <- mean(X)
++ }
+> LCL <- P.hat - 1.96*sqrt(P.hat*(1-P.hat)/n)
+> UCL <- P.hat + 1.96*sqrt(P.hat*(1-P.hat)/n)
+> mean((p >= LCL) & (p <= UCL))
+[1] 0.95131
