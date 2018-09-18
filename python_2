@@ -1,0 +1,70 @@
+"""""
+We implement logistic regression.
+X is the set of features.
+Y is the output that can be {0,1}
+if classification is binary.
+W is the set of weights.
+learning rate is a parameter that we control
+and by changing its value we can see its effects.
+"""""
+import argparse
+from numpy import *
+from scipy.stats import bernoulli
+
+
+# our main function
+def log_reg(dta, out, epsilon, learning_rate, result):
+    x = loadtxt(dta)
+    y = ones(x.shape[0])
+    w = random.random_sample(dta.shape[0])
+    _w = sum(w)
+    for i in range(len(w)):
+        w[i] = w[i] / _w
+    residual = 0
+    thresh = epsilon
+    p = 0
+    while residual > thresh:
+        while p < len(x):
+            if pro(x, w) < 0.5:
+                y[p] = 0
+            else:
+                y[p] = 1
+            p += 1
+        residual = out - y
+        update_w(y, w, x, learning_rate)
+    p = 0
+    while p < len(x):
+        result.write(y[p])
+    savetxt(result)
+    result.close()
+    dta.close()
+
+
+def update_w(y, w, x, learning_rate):
+        return w + learning_rate * sum(dot(y - sigmoid(dot(x, transpose(w))), x))
+        # y[j] - sigmoid(dot(w_arr[j] * x[j])) * x[j])
+
+
+def sigmoid(x):
+    return exp(x)/(1+exp(x))
+
+
+def pro(x, w):
+    return bernoulli.pmf(sigmoid(dot(transpose(w), x)))
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-eps', type=double)
+parser.add_argument('-lr', type=double)
+parser.add_argument('-input', type=str)
+parser.add_argument('-out', type=str)
+parser.add_argument('-output', type=str)
+args = parser.parse_args()
+data = loadtxt(args.input)
+output = open(args.output, 'w')
+m, n = data.shape
+print(m, n)
+print(len(data))
+if __name__ == '__main__':
+    for k in range(int(len(data))):
+        print(data[k])
+    log_reg(data, args.out, args.eps, args.lr, args.output)
