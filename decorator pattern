@@ -1,0 +1,200 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+    public abstract class Beverage
+    {
+		public string description = "Unknown Beverage";
+		public virtual string GetDescription()
+		{
+			return description;
+		}
+		public abstract double Cost();
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+    public abstract class CondimentDecorator : Beverage
+    {
+		public override abstract string GetDescription();
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+    public class DarkRoast : Beverage
+    {
+		public DarkRoast()
+		{
+			description = "Dark Roast Coffee";
+		}
+		public override double Cost()
+		{
+			return 0.99;
+		}
+	}
+}
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+  public class Decaf : Beverage
+    {
+		public Decaf()
+		{
+			description = "Decaf";
+		}
+		public override double Cost()
+		{
+			return 1.05;
+		}
+	}
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+    public class Espresso : Beverage
+    {
+		public Espresso()
+		{
+			description = "Espresso";
+		}
+		public override double Cost()
+		{
+			return 1.99;
+		}
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+    public class HouseBlend : Beverage
+    {
+		public HouseBlend()
+		{
+			description = "House Blend Coffee";
+		}
+		public override double Cost()
+		{
+			return 0.89;
+		}
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+    public class Mocha : CondimentDecorator
+    {
+		Beverage beverage;
+		public Mocha(Beverage beverage)
+		{
+			this.beverage = beverage;
+		}
+		public override string GetDescription()
+		{
+			return beverage.GetDescription() + ", Mocha";
+		}
+		public override double Cost()
+		{
+			return beverage.Cost() + 0.20;
+		}
+	}
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+    public class Soy : CondimentDecorator
+    {
+		Beverage beverage;
+		public Soy(Beverage beverage)
+		{
+			this.beverage = beverage;
+		}
+		public override string GetDescription()
+		{
+			return beverage.GetDescription() + ", Soy";
+		}
+		public override double Cost()
+		{
+			return beverage.Cost() + 0.15;
+		}
+	}
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+    public class SteamedMilk : CondimentDecorator
+    {
+		Beverage beverage;
+		public SteamedMilk(Beverage beverage)
+		{
+			this.beverage = beverage;
+		}
+		public override string GetDescription()
+		{
+			return beverage.GetDescription() + ", Steamed Milk";
+		}
+		public override double Cost()
+		{
+			return beverage.Cost() + 0.10;
+		}
+	}
+}
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DecoratorPattern
+{
+    public class Whip : CondimentDecorator
+    {
+		Beverage beverage;
+		public Whip(Beverage beverage)
+		{
+			this.beverage = beverage;
+		}
+		public override string GetDescription()
+		{
+			return beverage.GetDescription() + ", Whip";
+		}
+		public override double Cost()
+		{
+			return beverage.Cost() + 0.10;
+		}
+	}
+}
+
+
