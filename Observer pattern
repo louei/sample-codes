@@ -1,0 +1,185 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ObserverPattern
+{
+    public class CurrentConditionsDisplay : IObserver, IDisplayElement
+    {
+		private float temperature;
+		private float humidity;
+		private ISubject weatherData;
+
+		public CurrentConditionsDisplay(ISubject weatherData)
+		{
+			this.weatherData = weatherData;
+			weatherData.RegisterObserver(this);
+		}
+		public void Update(float temperature, float humidity, float pressure)
+		{
+			this.temperature = temperature;
+			this.humidity = humidity;
+			Display();
+		}
+		public void Display()
+		{
+			Console.WriteLine("Current conditions: "+temperature+"F degrees and "+humidity+"% humidity");
+		}
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ObserverPattern
+{
+	public class ForecastDisplay : IObserver, IDisplayElement
+	{
+		private float temperature;
+		private float humidity;
+		private float pressure;
+		private ISubject weatherData;
+		public ForecastDisplay(ISubject weatherData)
+		{
+			this.weatherData = weatherData;
+			weatherData.RegisterObserver(this);
+		}
+		public void Update(float temperature, float humidity, float pressure)
+		{
+			Display();
+		}
+		public void Display()
+		{
+			Console.WriteLine("Forecats: More of the same");
+		}
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ObserverPattern
+{
+    public interface IDisplayElement
+    {
+		void Display();
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ObserverPattern
+{
+    public interface IObserver
+    {
+		void Update(float temp, float humidity, float pressure);
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ObserverPattern
+{
+    public interface ISubject
+    {
+		void RegisterObserver(IObserver o);
+		void RemoveObserver(IObserver o);
+		void NotifyObservers();
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ObserverPattern
+{
+    public class StatisticsDisplay : IObserver, IDisplayElement
+    {
+		private float minTemp = float.MaxValue;
+		private float maxTemp = float.MinValue;
+		private float avgTemp = 0;
+		private static int numOfChange = 0;
+		private ISubject weatherData;
+
+		public StatisticsDisplay(ISubject weatherData)
+		{
+			this.weatherData = weatherData;
+			weatherData.RegisterObserver(this);
+
+		}
+		public void Update(float temperature, float humidity, float pressure)
+		{
+			if(temperature > maxTemp)
+			{
+				maxTemp = temperature;
+			}
+			if(temperature < minTemp)
+			{
+				minTemp = temperature;
+			}
+			avgTemp = (avgTemp * numOfChange + temperature) / (++numOfChange);
+			Display();
+		}
+		public void Display()
+		{
+			Console.WriteLine("Avg/Max/Min temperature= {0} / {1} / {2}", avgTemp,maxTemp,minTemp);
+		}
+	}
+}
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Collections;
+
+namespace ObserverPattern
+{
+    public class WeatherData : ISubject
+    {
+		private List<IObserver> observers; //ArrayList
+		private float temperature;
+		private float humidity;
+		private float pressure;
+		public WeatherData()
+		{
+			observers = new List<IObserver>(); //ArrayList
+		}
+		public void RegisterObserver(IObserver o)
+		{
+			observers.Add(o);
+		}
+		public void RemoveObserver(IObserver o)
+		{
+			int i = observers.IndexOf(o);
+			if (i >= 0)
+			{
+				observers.Remove(o);
+			}
+		}
+		public void NotifyObservers()
+		{
+			foreach(IObserver o in observers)
+			{
+				o.Update(temperature, humidity, pressure);	
+			}
+		}
+		public void measurementsChanged()
+		{
+			NotifyObservers();
+		}
+		public void SetMeasurements(float temperature, float humidity, float pressure)
+		{
+			this.temperature = temperature;
+			this.humidity = humidity;
+			this.pressure = pressure;
+			measurementsChanged();
+		}
+    }
+}
+
