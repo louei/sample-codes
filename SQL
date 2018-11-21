@@ -1,0 +1,57 @@
+select a.ssn, b.ssn 
+from ( select ssn from passenger different select ssn from crew ) a,
+( select ssn from passenger different select ssn from crew ) b where 
+a.ssn<> b.ssn and NOT EXISTS( select r.ssn from reservation r
+                              where b.ssn = r.ssn and 
+r.airline not in ( select airline from reservation where ssn = a.ssn ) and 
+r.flightnbr not in( select flightnbr from reservation where ssn = a.ssn) and 
+r.segnbr not in( select segnbr from reservation where ssn = a.ssn) );
+
+select passenger.ssn, passenger.name, reservation.airline,
+reservation.flightnbr, reservation.date 
+from passenger inner join reservation on passenger.ssn = reservation.ssn
+group by reservation.ssn, reservation.airline,
+reservation.flightnbr, reservation.date 
+having (select count(*) from reservation group by ssn, airline, flightnbr, date = 
+select max(segnbr) from schedule group by airline, flightnbr, date );
+
+select crew.ssn, crew.name from crew where ssn in 
+( select schedule.ssn from schedule inner join reservartion on 
+schedule.ssn = reservation.ssn and schedule.segnbr = reservation.segnbr 
+where schedule.date <> reservation.date ) and job='pilot';
+
+select ssn, name from crew where ssn not in
+( select crew.ssn from crew inner join schedule on 
+  crew.ssn = schedule.ssn inner join flightinfo on 
+  schedule.airline = flightinfo.airline and 
+  schedule.flightnbr = flightinfo.flightnbr and 
+  schedule.segnbr = flightinfo.segnbr where origin='ohare'
+  or dest='ohare'
+  union 
+  select crew.ssn from crew inner join reservation on 
+  crew.ssn = reservation.ssn inner join flightinfo on 
+  reservation.airline = flightinfo.airline and 
+  reservation.flightnbr = flightinfo.flightnbr and 
+  reservation.segnbr = flightinfo.segnbr where origin='ohare'
+  or dest='ohare'
+);
+
+select p.airline, p.flightbnr, p.seg, p.orig, q.dest, p.etd, p.eta, 
+p.airmiles from((select airline, flightbnr, max(segnbr) as seg , orig, dest, 
+etd, eta, airmiles from flightinfo group by airline, flightbnr) p inner 
+join( select airline, flightnbr, segnbr, orig, dest, etd, eta, 
+airmiles from flgihtinfo)q on p.airline = q.airline and
+p.flightbnr = q.flightnbr and p.seg = q.segnbr );
+
+select distinct crew.ssn, crew.name
+from crew inner join schedule on crew.ssn = schedule.ssn
+inner join flightinfo on schedule.airline= flighinfo.airline
+and schedule.flightnbr = flightinfo.flightnbr and
+schedule.segnbr = flightinfo.segnbr
+where crew.job = 'pilot' and( orign = 'heathrow' or dest = 'heathrow');
+
+select deistinct airline, flightnbr, segnbr, date
+from departure a
+where NOT EXISTS( select airline, flightnbr, segnbr, date
+ from reservation b where a.airline = b.airline and 
+a.flightnbr = b.flightnbr and a.segnbr = b.segnbr and a.date=b.date);
